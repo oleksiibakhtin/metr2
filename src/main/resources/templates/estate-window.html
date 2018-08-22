@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>Метр квадратный</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+		<link type = "text/css" rel="stylesheet" href="/css/metr_style.css"/>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"/>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+	</head>	
+	
+	<body>
+		<div class="container-fluid">
+			<div class="header">
+				<a href="/">
+					<img src="/images/main-img.jpg" width="100%"></img>
+				</a>
+			</div>
+			
+			<div class="container content">
+				<div class="row">
+					<div class="col-sm-8">
+						<span class="h4" style="color: blue; word-wrap: break-word; min-width: 100px; max-width: 160px;" th:text="${showingEstate.estateName}"></span>
+						<span class="h4" th:text="' (ID: ' + ${showingEstate.id} + ')'"></span>
+						<br/>
+						<span th:text="${showingEstate.estateType} + ' (' + ${showingEstate.operationType} + ')' "></span>
+						<br/>
+						<span style="color:grey" th:text="${showingEstate.date}"></span>
+						<br/>
+					</div>
+					<div class="col-sm-4">
+						<img src="/images/price.png" width="10%"/>
+						<span class="h3" th:text="${showingEstate.price != null} ? ${showingEstate.price} + ' грн' : 'цена договорная'"></span>
+					</div>
+				</div>
+				<br/>
+				<div class="row">
+					<div class="col-sm-8">
+						<span style="word-wrap: break-word; min-width: 160px; max-width: 160px;" th:text="${showingEstate?.description}"></span>		
+					</div>
+				</div>
+				<br/>
+				<div class="row">
+					<div th:if="${!showingEstate.estatePhoto.empty}" class="col-sm-8 img-thumbnail" align="center" style="background-color: lightblue">
+						<div id="demo" class="carousel slide" width="50%" data-ride="carousel">
+							<!-- Indicators -->
+							<ul class="carousel-indicators">
+								<li data-target="#demo" data-slide-to="0" class="active"></li>
+								<li data-target="#demo" data-slide-to="1"></li>
+								<li data-target="#demo" data-slide-to="2"></li>
+							</ul>
+							<!-- Wrapper for slides -->
+							<div class="carousel-inner">
+								<div class="carousel-item active">
+									<img th:src="@{/show/{id}(id=${showingEstate.estatePhoto[0].id})}" />
+								</div>
+								<th:block th:each="photo : ${showingEstate.estatePhoto}">
+									<div class="carousel-item">
+										<img th:src="@{/show/{id}(id=${photo.id})}" />
+									</div>						
+								</th:block>
+							</div>
+							<!-- Left and right controls -->
+							<a class="carousel-control-prev" href="#demo" data-slide="prev">
+								<span class="carousel-control-prev-icon"></span>
+							</a>
+							<a class="carousel-control-next" href="#demo" data-slide="next">
+								<span class="carousel-control-next-icon"></span>
+							</a>
+						</div>
+					</div>
+					<div th:if=${showingEstate.estatePhoto.empty} class="col-sm-8 img-thumbnail" align="center">
+						<img src="/images/no-photo.jpg" width="30%"></img>
+					</div>
+					<div class="col-sm-4">
+						<div class="row" th:if="${showingEstate.regionType} != null">
+							<div class="col-sm-6">
+								<b><span>Область:</span></b>
+							</div>
+							<div class="col-sm-6">
+								<span th:text="${showingEstate.regionType}"></span>
+							</div>
+						</div>
+						<div class="row" th:if="${showingEstate.cityType} != null">
+							<div class="col-sm-6">
+								<b><span>Город:</span></b>
+							</div>
+							<div class="col-sm-6">
+								<span th:text="${showingEstate.cityType}"></span>
+							</div>
+						</div>
+						<div class="row" th:if="${showingEstate.districtType} != null">
+							<div class="col-sm-6">
+								<b><span>Район:</span></b>
+							</div>
+							<div class="col-sm-6">
+								<span th:text="${showingEstate.districtType}"></span>
+							</div>
+						</div>
+						<div class="row" th:unless="${showingEstate.street.empty}">
+							<div class="col-sm-6">
+								<b><span>Улица:</span></b>
+							</div>
+							<div class="col-sm-6">
+								<span th:text="${showingEstate.street}"></span>
+							</div>
+						</div>
+		
+						<div class="row" th:unless="${showingEstate.apt.empty}">
+							<div class="col-sm-6">
+								<b><span>Дом:</span></b>
+							</div>
+							<div class="col-sm-6">
+								<span th:text="${showingEstate.apt}"></span>
+							</div>
+						</div>
+						<div class="row" th:if="${showingEstate.metroDistance} != null">
+							<div class="col-sm-6">
+								<b><span>До метро (м):</span></b>
+							</div>
+							<div class="col-sm-6">
+								<span th:text="${showingEstate.metroDistance}"></span>
+							</div>
+						</div>
+						<div class="row" th:if="${showingEstate.roomsCount} != null">
+							<div class="col-sm-6">
+								<b><span>Количество комнат:</span></b>
+							</div>
+							<div class="col-sm-6">
+								<span th:text="${showingEstate.roomsCount}"></span>
+							</div>
+						</div>
+						<div class="row" th:if="${showingEstate.area} != null">
+							<div class="col-sm-6">
+								<b><span>Площадь:</span></b>
+							</div>
+							<div class="col-sm-6">
+								<span th:text="${showingEstate.area}"></span>
+							</div>
+						</div>
+						<div class="row" th:if="${showingEstate.livingArea} != null">
+							<div class="col-sm-6">
+								<b><span>Жилая площадь:</span></b>
+							</div>
+							<div class="col-sm-6">
+								<span th:text="${showingEstate.livingArea}"></span>
+							</div>
+						</div>
+						<div class="row" th:if="${showingEstate.floorNum} != null">
+							<div class="col-sm-6">
+								<b><span>Этаж:</span></b>
+							</div>
+							<div class="col-sm-6">
+								<span th:text="${showingEstate.floorNum}"></span>
+							</div>
+						</div>
+						<div class="row" th:if="${showingEstate.floorsCount} != null">
+							<div class="col-sm-6">
+								<b><span>Этажей:</span></b>
+							</div>
+							<div class="col-sm-6">
+								<span th:text="${showingEstate.floorsCount}"></span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<footer class="footer">
+				<div class="row">
+					<div class="col-sm-12">
+						<p>Разработчик: <a href="mailto:oleksii.bakhtin@gmail.com">oleksii.bakhtin@gmail.com</a></p>
+						<p>Телефон: +38(050)18-20-115</p>
+						<p>Адрес: г. Киев пр-т Маяковского</p>
+					</div>
+				</div>
+			</footer>
+		</div>	
+	</body>
+</html>

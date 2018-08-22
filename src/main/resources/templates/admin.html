@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="author" content="Oleksii Bakhtin" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"/>
+		<link type = "text/css" rel="stylesheet" href="/css/metr_style.css" />
+		<script src="js/bootstrap.js"></script>
+		<title>Метр квадратный</title>
+	</head>
+	
+	<body>
+		<div class="container-fluid">
+			<div class="head">
+				<a href="/">
+					<img src="/images/main-img.jpg" width="100%"></img>
+				</a>
+				<br/>
+				<div class = "row">
+					<div class = "col-md-12 main-center">
+						<h1>Страница одмена</h1>
+					</div>
+				</div>
+				<br/>
+				<div class="row">
+					<div class="col-sm-2">
+						<a class="btn btn-primary" href="#" th:href="@{/admin/gohandle}" method="GET">Обработка заявок</a>
+					</div>
+					<div class="col-sm-2">
+						<a class="btn btn-primary" href="#" th:href="@{/admin/goall}" method="GET">Размещенные</a>
+					</div>
+					<div class="col-sm-2">
+						<a class="btn btn-primary" href="#" th:href="@{/admin/goacconts}" method="GET">Управление аккаунтами</a>
+					</div>
+				</div>
+			</div>
+			<footer class="footer">
+				<div class="row">
+					<div class="col-sm-12">
+						<p>Разработчик: <a href="mailto:oleksii.bakhtin@gmail.com">oleksii.bakhtin@gmail.com</a></p>
+						<p>Телефон: +38(050)18-20-115</p>
+						<p>Адрес: г. Киев пр-т Маяковского</p>
+					</div>
+				</div>
+			</footer>
+</div>	
+	</body>
+
+</html>

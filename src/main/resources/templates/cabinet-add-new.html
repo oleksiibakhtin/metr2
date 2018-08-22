@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>Метр квадратный</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+		<link type = "text/css" rel="stylesheet" href="/css/metr_style.css" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+	</head>
+	
+	<body>
+		<div class = "container-fluid">
+			<div class="header">
+				<a href="/">
+					<img src="/images/main-img.jpg" width="100%"></img>
+				</a>
+				<div class = "container row">
+					<div class = "col-sm-12 main-center">
+						<h1>Заявка на размещение объекта</h1>
+					</div>
+				</div>
+			</div>
+
+			<div class="container content-fluid">
+				<form class="form-group" enctype="multipart/form-data" method="POST" action="#" th:action="@{/cabinet/addnew}" th:object="${newEstate}">
+					<input type="number" th:name="id" th:value="${newEstate.id}" hidden />
+					<div class="form-group row">
+						<div class="col-sm-6">
+							<select class="form-control form-control-lg" th:field="${newEstate.operationType}">
+								<option th:each="operationType : ${types.operationTypes}" th:value="${operationType}" th:utext="${operationType}"/>
+							</select>
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-sm-6">
+							<select class="form-control form-control-lg"  th:field="${newEstate.estateType}">
+								<option th:each="estateType : ${types.estateTypes}" th:value="${estateType}" th:utext="${estateType}" />
+							</select>
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-sm-2">
+							<label for="region">Область</label>
+						</div>
+						<div class="col-sm-4">
+							<select class="form-control form-control-lg" id="region" th:field="${newEstate.regionType}">
+								<option th:each="regionType : ${types.regionTypes}" th:value="${regionType}" th:utext="${regionType}"/>
+							</select>
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-sm-2">
+							<label for="city">Город</label>
+						</div>
+						<div class="col-sm-4">
+							<select class="form-control form-control-lg" id="city" th:field="${newEstate.cityType}">
+								<option th:each="cityType : ${types.cityTypes}" th:value="${cityType}" th:utext="${cityType}" />
+							</select>
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-sm-2">
+							<label for="district">Район</label>
+						</div>
+						<div class="col-sm-4">
+							<select class="form-control form-control-lg" id="district" th:field="${newEstate.districtType}"> 
+								<option th:each="districtType : ${types.districtTypes}" th:value="${districtType}" th:utext="${districtType}" />
+							</select>
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-sm-2">
+							<label for="street">Улица</label>
+						</div>
+						<div class="col-sm-4">
+							<input class="form-control form-control-lg" type="text" placeholder="до 50 символов" id="street" th:field="${newEstate.street}" />
+						</div>
+						<div class="col-sm-6 alert alert-danger" th:if="${#fields.hasErrors('street')}" th:errors="*{street}" />
+					</div>
+					<div class="form-group row">
+						<div class="col-sm-2">
+							<label for="apt">Дом</label>
+						</div>
+						<div class="col-sm-4">
+							<input class="form-control" type="text" id="apt" th:field="${newEstate.apt}" />
+						</div>
+						<div class="col-sm-6 alert alert-danger" th:if="${#fields.hasErrors('apt')}" th:errors="*{apt}" />
+					</div>
+					<div class="form-group row">
+						<div class="col-sm-2">
+							<label for="metrodistance">Расстояние до метро</label>
+						</div>
+						<div class="col-sm-4">
+							<input class="form-control" type="number" min="0" id="metrodistance" th:field="${newEstate.metroDistance}" />
+						</div>
+						<div class="col-sm-6 alert alert-danger" th:if="${#fields.hasErrors('metroDistance')}" th:errors="*{metroDistance}" />
+					</div>
+					<div class="form-group row">
+						<div class="col-sm-2">
+							<label for="price">Цена</label>
+						</div>
+						<div class="col-sm-4">
+							<input class="form-control" type="number" min="0" id="price" placeholder="если не указать - будет 'договорной'" th:field="${newEstate.price}" />
+						</div>
+						<div class="col-sm-6 alert alert-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}" />
+					</div>
+					<div class="form-group row">
+						<div class="col-sm-2">
+							<label for="area">Площадь</label>
+						</div>
+						<div class="col-sm-4">
+							<input class="form-control" type="number" min="0" id="area" th:field="${newEstate.area}">
+						</div>
+						<div class="col-sm-6 alert alert-danger" th:if="${#fields.hasErrors('area')}" th:errors="*{area}" />
+					</div>
+					<div class="form-group row">
+						<div class="col-sm-2">
+							<label for="livingArea">Жилая площадь</label>
+						</div>
+						<div class="col-sm-4">
+							<input class="form-control" type="number" min="0" id="livingArea" th:field="${newEstate.livingArea}" />
+						</div>
+						<div class="col-sm-6 alert alert-danger" th:if="${#fields.hasErrors('livingArea')}" th:errors="*{livingArea}" />
+					</div>
+					<div class="form-group row">
+						<div class="col-sm-2">
+							<label for="roomsCount">К-во комнат</label>
+						</div>
+						<div class="col-sm-4">
+							<input class="form-control" type="number" min="0" id="roomsCount" th:field="${newEstate.roomsCount}" />
+						</div>
+						<div class="col-sm-6 alert alert-danger" th:if="${#fields.hasErrors('roomsCount')}" th:errors="*{roomsCount}" />
+					</div>
+					<div class="form-group row">
+						<div class="col-sm-2">
+							<label for="floorNum">Этаж №</label>
+						</div>
+						<div class="col-sm-4">
+							<input class="form-control" type="number" min="0" id="floorNum" th:field="${newEstate.floorNum}" />
+						</div>
+						<div class="col-sm-6 alert alert-danger" th:if="${#fields.hasErrors('floorNum')}" th:errors="*{floorNum}" />
+					</div>
+					<div class="form-group row">
+						<div class="col-sm-2">
+							<label for="floorsCount">К-во этажей</label>
+						</div>
+						<div class="col-sm-4">
+							<input class="form-control" type="number" min="0" id="floorsCount" th:field="${newEstate.floorsCount}" />
+						</div>
+						<div class="col-sm-6 alert alert-danger" th:if="${#fields.hasErrors('floorsCount')}" th:errors="*{floorsCount}" />
+					</div>
+					<div class="form-group row">
+						<div class="col-sm-2">
+							<label for="estateName">Заглавие</label>
+						</div>
+						<div class="col-sm-4">
+							<input class="form-control" type="text" id="name" placeholder="обязательно к заполнению (не более 100 символов)" th:field="${newEstate.estateName}" />
+						</div>
+						<div class="col-sm-6 alert alert-danger" th:if="${#fields.hasErrors('estateName')}" th:errors="*{estateName}" />
+					</div>
+					<div class="form-group row">
+						<div class="col-sm-2">
+							<label for="description">Описание</label>
+						</div>
+						<div class="col-sm-4">
+							<textarea class="form-control" rows="5" id="description" placeholder="обязательно к заполнению (не более 1000 символов)" th:field="${newEstate.description}"></textarea>
+						</div>
+						<div class="col-sm-6 alert alert-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}" />
+					</div>
+					<div class="form-group row">
+						<div class="col-sm-6">
+							<label class="center form-check-label">
+								<input class="form-check-input-lg" type="checkbox" id="inTop" th:field="${newEstate.inTop}" />
+								<img src="/images/hot.gif" width="50px" height="50px"></img> Поместить в ТОП
+							</label>
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-sm-6">
+							Загрузить фотографии <input type="file" accept="image/gif, image/jpeg" name="photos" multiple="multiple"/>
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-sm-6">
+							<button type="submit" class="btn btn-primary">Отправить</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		
+			<footer class="footer">
+				<div class="row">
+					<div class="col-sm-12">
+						<p>Разработчик: <a href="mailto:oleksii.bakhtin@gmail.com">oleksii.bakhtin@gmail.com</a></p>
+						<p>Телефон: +38(050)18-20-115</p>
+						<p>Адрес: г. Киев пр-т Маяковского</p>
+					</div>
+				</div>
+			</footer>
+		</div>
+	</body>
+</html>

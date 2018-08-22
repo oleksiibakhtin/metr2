@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>Метр квадратный</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"/>
+		<link type = "text/css" rel="stylesheet" href="/css/metr_style.css" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+	</head>
+	
+	<body>
+		<div class="header">
+			<a href="/">
+				<img src="/images/main-img.jpg" width="100%"></img>
+			</a>
+			<div class = "row">
+				<div class = "col-md-12 main-center">
+					<h1>Мой кабинет</h1>
+				</div>
+			</div>
+		</div>
+		<br/><br/>
+	
+		<div class="content-fluid">
+			<div class = "row">
+				<div class = "col-md-12 main-center">
+					<a class="btn btn-primary" href="#" th:href="@{/cabinet/go-add-new-estate}" method="GET">Добавить новый объект</a>
+				</div>
+			</div>
+		
+			<br/>
+			
+			<div class="row">
+				<div class="col-sm-12">
+					<h3>Мои объекты:</h3>
+				</div>
+			</div>
+			
+			<div th:if="${myEstateSet} != null">
+				<table class="table">
+					<thead class="thead-dark">
+						<th scope="col">Номер_(ID)</th>
+						<th scope="col">Дата_подачи</th>
+						<th scope="col">Текущий_статус</th>
+						<th scope="col">Операция_над_объектом</th>
+						<th scope="col">Тип_недвижимости</th>
+						<th scope="col">_______Краткое_описание_(заглавие)_объекта_______</th>
+						<th scope="col">Цена_объекта_(грн)</th>
+						<th scope="col">Область_размещения</th>
+						<th scope="col">Город_размещения</th>
+						<th scope="col">Район_размещения</th>
+						<th scope="col">Улица_размещения_объекта</th>
+						<th scope="col">№_дома/квартиры</th>
+						<th scope="col">Расстояние до_метро</th>
+						<th scope="col">Количество комнат</th>
+						<th scope="col">Общая_площадь</th>
+						<th scope="col">Жилая_площадь</th>
+						<th scope="col">Этаж_№</th>
+						<th scope="col">Количество_этажей</th>
+						<th scope="col">_________________________Полное_описание_объекта______________________________</th>
+						<th scope="col"><img src="/images/hot.gif" width="50px" height="50px"></img></th>
+						<th scope="col">_________________________Фотографии_объекта__________________________</th>
+						<th scope="col">Выполнить_действие</th>
+					</thead>
+					<tbody>
+					<th:block th:each="estate : ${myEstateSet}">
+						<form action="#" th:action="@{/cabinet/edit}" th:object="${estate}" method="POST">
+							<tr>
+								<td>
+									<input class="form-control" type="number" th:name="id" th:value="${estate.id}" readonly/>
+								</td>
+								<td>
+									<input class="form-control" type="datetime-local" th:name="date" th:value="${estate.date}" readonly/>
+								</td>
+								<td>
+									<input class="form-control" type="text" th:name="statusType" th:value="${estate.statusType}" readonly/>
+								</td>
+								<td>
+									<select class="form-control form-control-lg" th:name="operationType" th:disabled="${estate.statusType != 'Заявка'}">
+										<option th:each="operationType : ${types.operationTypes}"
+												th:value="${operationType}"
+												th:utext="${operationType}"
+												th:selected="${estate.operationType == operationType}"
+										/>
+									</select>
+								</td>
+								<td>
+									<select class="form-control form-control-lg" th:name="estateType" th:disabled="${estate.statusType != 'Заявка'}">
+										<option th:each="estateType : ${types.estateTypes}"
+												th:value="${estateType}"
+												th:utext="${estateType}"
+												th:selected="${estate.estateType == estateType}"
+										/>
+									</select>
+								</td>
+								<td>
+									<textarea class="form-control" rows="5" th:name="estateName" th:value="${estate.estateName}" th:disabled="${estate.statusType != 'Заявка'}">[[${estate.estateName}]]</textarea>
+								</td>
+								<td>
+									<input class="form-control" type="number" th:name="price" th:value="${estate.price}" th:disabled="${estate.statusType != 'Заявка'}"/>
+								</td>
+								<td>
+									<select class="form-control form-control-lg" th:name="regionType" th:disabled="${estate.statusType != 'Заявка'}">
+										<option th:each="regionType : ${types.regionTypes}"
+												th:value="${regionType}"
+												th:utext="${regionType}"
+												th:selected="${estate.regionType == regionType}"
+										/>
+									</select>
+								</td>
+								<td>
+									<select class="form-control form-control-lg" th:name="cityType" th:disabled="${estate.statusType != 'Заявка'}">
+										<option th:each="cityType : ${types.cityTypes}"
+												th:value="${cityType}"
+												th:utext="${cityType}"
+												th:selected="${estate.cityType == cityType}"
+										/>
+									</select>
+								</td>
+								<td>
+									<select class="form-control form-control-lg" th:name="districtType" th:disabled="${estate.statusType != 'Заявка'}">
+										<option th:each="districtType : ${types.districtTypes}"
+												th:value="${districtType}"
+												th:utext="${districtType}"
+												th:selected="${estate.districtType == districtType}"
+										/>
+									</select>
+								</td>
+								<td>
+									<input class="form-control" type="text" th:name="street" th:value="${estate.street}" th:disabled="${estate.statusType != 'Заявка'}"/>
+								</td>
+								<td>
+									<input class="form-control" type="text" th:name="apt" th:value="${estate.apt}" th:disabled="${estate.statusType != 'Заявка'}"/>
+								</td>
+								<td>
+									<input class="form-control" type="number" th:name="metroDistance" th:value="${estate.metroDistance}" min="0" th:disabled="${estate.statusType != 'Заявка'}"/>
+								</td>
+								<td>
+									<input class="form-control" type="number" th:name="roomsCount" th:value="${estate.roomsCount}" min="0" th:disabled="${estate.statusType != 'Заявка'}"/>
+								</td>
+								<td>
+									<input class="form-control" type="number" th:name="area" th:value="${estate.area}" min="0" th:disabled="${estate.statusType != 'Заявка'}"/>
+								</td>
+								<td>
+									<input class="form-control" type="number" th:name="livingArea" th:value="${estate.livingArea}" min="0" th:disabled="${estate.statusType != 'Заявка'}"/>
+								</td>
+								<td>
+									<input class="form-control" type="number" th:name="floorNum" th:value="${estate.floorNum}" min="0" th:disabled="${estate.statusType != 'Заявка'}"/>
+								</td>
+								<td>
+									<input class="form-control" type="number" th:name="floorsCount" th:value="${estate.floorsCount}" min="0" th:disabled="${estate.statusType != 'Заявка'}"/>
+								</td>
+								<td>
+									<textarea class="form-control" rows="5" th:name="description" th:value="${estate.description}" th:disabled="${estate.statusType != 'Заявка'}">[[${estate.description}]]</textarea>
+								</td>
+								<td align="center">
+									<input class="checked-agree" type="checkbox" th:name="inTop" th:value="${estate.inTop}" th:disabled="${estate.statusType != 'Заявка'}" />
+								</td>
+								<td>
+									<div class="row" th:if="${!estate.estatePhoto.empty}">
+										<th:block th:each="photo : ${estate.estatePhoto}">
+										<div class="col-sm-4">
+											<img th:src="@{/show/{id}(id=${photo.id})}" width="100%"></img>
+										</div>						
+										</th:block>
+									</div>
+										
+									<div th:if="${estate.estatePhoto.empty}">
+										<img class="img-thumbnail" src="/images/no-photo.jpg" width="30%"></img>
+									</div>
+								</td>
+								<td>
+									<button type="submit" class="btn btn-primary" th:disabled="${estate.statusType != 'Заявка'}">Сохранить изменения</button>
+									<br/><br/>
+									<a class="form-control btn btn-danger" href="#" th:href="@{/cabinet/delete-estate/__*{id}__}" method="GET">Удалить</a>
+								</td>
+							</tr>
+						</form>		
+					</th:block>
+					</tbody>
+		</table>
+			</div>
+			</div>	
+				<footer class="footer">
+		<div class="row">
+			<div class="col-sm-12">
+				<p>Разработчик: <a href="mailto:oleksii.bakhtin@gmail.com">oleksii.bakhtin@gmail.com</a></p>
+				<p>Телефон: +38(050)18-20-115</p>
+				<p>Адрес: г. Киев пр-т Маяковского</p>
+			</div>
+		</div>
+	</footer>
+	</body>
+</html>

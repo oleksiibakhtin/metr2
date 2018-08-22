@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="author" content="Oleksii Bakhtin" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"/>
+		<link type = "text/css" rel="stylesheet" href="/css/metr_style.css" />
+		<script src="js/bootstrap.js"></script>
+		<title>Метр квадратный</title>
+	</head>
+
+	<body>
+		<header>
+			<div class="row">
+				<div class="col-sm-12">
+					<a href="/">
+						<img src="/images/main-img.jpg" width="100%"></img>
+					</a>
+				</div>
+			</div>
+		</header>
+	
+		<div class = "container">
+			<div class = "form-group row main">
+				<div class = "col-md-12 main-center">
+					<h1>Регистрация на сайте</h1>
+				</div>
+			</div>
+			<div class = "form-group row">
+				<div class = "col-md-12">
+					<br/><br/><br/><br/>
+				</div>	
+			</div>
+			<div class="form-group">
+				<form method="POST" action="#" th:action="@{/registration}" th:object="${registeringUser}">
+					<div class="form-group row">
+						<div class="col-md-2">
+							<label>Ваше имя:</label>
+						</div>
+						<div class="col-md-4">
+							<div class="input-group">
+								<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+								<input type="text" class="form-control" placeholder="Введите имя" th:field="${registeringUser.name}" />
+							</div>
+						</div>
+						<div class="col-md-6 alert alert-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}" />
+					</div>
+					<div class="form-group row">
+						<div class="col-md-2">
+							<label>Эл. почта:</label>
+						</div>
+						<div class="col-md-4">
+							<div class="input-group">
+								<span class="input-group-addon">
+									<i class="glyphicon glyphicon-envelope"></i></span>
+								<input type="email" class="form-control" placeholder="Введите Email" th:field="${registeringUser.email}" />
+							</div>
+						</div>
+						<div class="col-md-6 alert alert-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}" />	
+					</div>
+					<div class="form-group row">
+						<div class="col-md-2">
+							<label>Телефон:</label>
+						</div>
+						<div class="col-md-4">
+							<div class="input-group">
+								<span class="input-group-addon"><i class="glyphicon glyphicon-phone-alt"></i></span>
+								<input type="tel" pattern="^\+380\(\d{2}\)\d{7}$" class="form-control" placeholder="+380(**)..." th:field="${registeringUser.phone}" />
+							</div>
+						</div>
+						<div class="col-md-6 alert alert-danger" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" />
+					</div>
+					<div class="form-group row">
+						<div class="col-md-2">
+							<label>Пароль на сайте:</label>
+						</div>
+						<div class="col-md-4">
+							<div class="input-group">
+								<span class="input-group-addon"><i class="glyphicon glyphicon-eye-close"></i></span>
+								<input type="password" class="form-control" placeholder="Введите пароль" th:field="${registeringUser.password}" />
+							</div>
+						</div>
+						<div class="col-md-6 alert alert-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}" />
+					</div>
+					<div class="form-group row">
+						<div class="col-sm-6">
+							<label class="form-check-label">
+								<input class="form-check-input" type="checkbox" th:field="${registeringUser.dispatch}" />
+									Держите меня в курсе свежих предложений (подписаться на рассылку)
+							</label>
+						</div>
+					</div>
+					<div class = "form-group row">
+						<div class = "col-md-12">
+							<br/><br/>
+						</div>	
+					</div>
+					<div class="form-group row">
+						<div class="col-md-12">
+							<button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		
+		<footer class="footer">
+			<div class="row">
+				<div class="col-sm-12">
+					<p>Разработчик: <a href="mailto:oleksii.bakhtin@gmail.com">oleksii.bakhtin@gmail.com</a></p>
+					<p>Телефон: +38(050)18-20-115</p>
+					<p>Адрес: г. Киев пр-т Маяковского</p>
+				</div>
+			</div>
+		</footer>
+	</body>
+</html>

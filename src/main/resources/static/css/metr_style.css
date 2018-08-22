@@ -1,0 +1,96 @@
+.estate-holder {
+			position: relative;
+			display: block;
+			}
+			
+			.plus-image {
+			left: 90%;
+			top: 10%;
+			position: absolute;
+			margin-top: -25px;
+			margin-left: -25px;
+			}
+			
+	.header {
+	position:absolute; 
+	top: 0px; 
+	left: 0px; 
+	max-height: 30%;
+	right: 0px; 
+	overflow: hidden;
+	z-index: 100;
+}
+
+	.search {
+	position: absolute;
+	top: 40%;
+	transform: translateY(-20%);
+    width: 20%;
+	border: 1px solid blue;
+	border-radius: 8px;
+	background-color: #99CCFF;
+	padding: 10px;
+}
+
+.content {
+	position: absolute;
+	top: 31%; 
+	bottom: 140px;
+	left: 22%;
+	width: 55%;
+	overflow: auto;
+}
+
+.account {
+	position: absolute;
+	top: 32%;
+	left: 79%;
+    width: 20%;
+	padding: 5px;
+	border: 1px solid blue;
+	border-radius: 4px;
+	z-index: 100;
+}
+
+
+.content-fluid {
+	position: absolute;
+	top: 350px; 
+	bottom: 140px;
+	left: 0px;
+	right: 0px;
+	overflow: auto;
+}
+
+.mynavigation {
+	position: absolute;
+	top: 310px; 
+	bottom: 140px;
+	z-index:100;
+}
+
+.pager {
+	width: 400;
+    position: fixed;
+	bottom: 120px;
+	height: 20px;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 100;
+}
+			
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+	height: 100px;
+    color: white;
+	background-color: #9999DD;
+    text-align: center;
+	z-index:100;
+}
+
+.carousel-inner img {
+			height: 700px;
+			}

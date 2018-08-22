@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="author" content="Oleksii Bakhtin" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"/>
+		<link type = "text/css" rel="stylesheet" href="/css/metr_style.css" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+		<script src="js/bootstrap.js"></script>
+		<title>Метр квадратный</title>
+	</head>
+	
+	<body>
+		<div class="container-fluid">
+			<div class="header">
+				<a href="/">
+					<img src="/images/main-img.jpg" width="100%"></img>
+				</a>
+				<br/>
+			</div>
+
+			<div class="account">
+				<div th:if="${session.currentUser.name != null}">
+					<div class="row">
+						<div class="col-sm-6 d-flex justify-content-center">
+							<img src="/images/user.jpg" style="border-radius: 30%"></img>
+						</div>
+						<div class="col-sm-6 d-flex justify-content-center">
+							<b><p th:text="${session.currentUser.name}"></p></b>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6 d-flex justify-content-center">
+							<a class="btn btn-primary" href="#" th:href="@{/doexit}" method="GET">Выход</a>
+						</div>
+						<div class="col-sm-6 d-flex justify-content-center">
+							<a class="btn btn-primary" href="#" th:href="@{/gocabinet}" method="GET">Кабинет</a>
+						</div>
+					</div>
+				</div>
+				<div th:if="${session.currentUser.name == null}">
+					<form class="form-group" action="#" th:action="@{/}" th:object="${authorizingUser}" method="POST">
+						<div class="form-group row">
+							<div class="col-sm-3">
+								<label for="login">Логин:</label>
+							</div>
+							<div class="col-sm-9">
+								<input class="form-control" type= "text" placeholder="e-mail / телефон" th:field="${authorizingUser.email}" id="login"/>
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-sm-3">
+								<label for="password">Пароль:</label>
+							</div>
+							<div class="col-sm-9">
+								<input class="form-control" type="password" th:field="${authorizingUser.password}" id="password"/>
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-sm-6 d-flex justify-content-center">
+								<button type="submit" class="btn btn-primary">Вход</button>
+							</div>
+							<div class="col-sm-6 d-flex justify-content-center">
+								<a href="/goregistration">Регистрация</a>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			
+			<div class="container search">
+				<form class="form-group" method="POST" action="#" th:action="@{/search}" th:object="${searchingCondition}">
+					<div class="form-group row">
+						<div class="col-sm-12">
+							<input class="form-control" type="text" placeholder="Поиск по названию" th:field="${searchingCondition.keyWords}" />
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-sm-6">
+							<select class="form-control" th:field="${searchingCondition.operationType}">
+								<option th:value="all">Все операции</option>
+								<option th:each="operationType : ${types.operationTypes}" th:value="${operationType}" th:utext="${operationType}"/>
+							</select>
+						</div>
+						<div class="col-sm-6">
+							<select class="form-control"  th:field="${searchingCondition.estateType}">
+								<option th:value="all">Все типы</option>
+								<option th:each="estateType : ${types.estateTypes}" th:value="${estateType}" th:utext="${estateType}" />
+							</select>
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-sm-3">
+							<label for="region"><b>Область</b></label>
+						</div>
+						<div class="col-sm-9">
+							<select class="form-control" th:field="${searchingCondition.regionType}">
+								<option th:value="all">Любая область</option>
+								<option th:each="regionType : ${types.regionTypes}" th:value="${regionType}" th:utext="${regionType}"/>
+							</select>
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-sm-3">
+							<label for="city"><b>Город</b></label>
+						</div>
+						<div class="col-sm-9">
+							<select class="form-control" th:field="${searchingCondition.cityType}">
+								<option th:value="all">Любой город</option>
+								<option th:each="cityType : ${types.cityTypes}" th:value="${cityType}" th:utext="${cityType}" />
+							</select>
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-sm-3">
+							<label for="district"><b>Район</b></label>
+						</div>
+						<div class="col-sm-9">
+							<select class="form-control" th:field="${searchingCondition.districtType}">
+								<option th:value="all">Любой район</option>
+								<option th:each="districtType : ${types.districtTypes}" th:value="${districtType}" th:utext="${districtType}" />
+							</select>
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-sm-2">
+							<label for="price"><b>Цена</b></label>
+						</div>
+						<div class="col-sm-5">
+							<input class="form-control " type="number" min="0" th:field="${searchingCondition.fromPrice}" />
+						</div>
+						<div class="col-sm-5">
+							<input class="form-control" type="number" min="0" th:field="${searchingCondition.toPrice}" />
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-sm-12">
+							<button type="submit" class="btn btn-primary">Найти</button>
+						</div>
+					</div>
+				</form>
+			</div>
+			
+			<div class="content">
+				<table class="table">
+					<tbody>
+						<th:block th:each="estate : ${estateList}">
+							<tr class="row">
+								<td class="col-sm-2" align="center">
+									<a th:href="@{/estate-window/{id}(id=${estate.id})}">
+										<div th:if="${estate.inTop}" class="estate-holder">
+											<div th:unless="${estate.estatePhoto.empty}">
+												<img class="img-thumbnail" th:src="@{/show/{id}(id=${estate.estatePhoto[0].id})}" width="100%"></img>
+												<img class='plus-image' src="/images/hot.gif" width="50px" height="50px"></img>
+											</div>
+											<div th:if="${estate.estatePhoto.empty}">
+												<img class="img-thumbnail" src="/images/no-photo.jpg" width="100%"></img>
+												<img class='plus-image' src="/images/hot.gif" width="50px" height="50px"></img>
+											</div>
+										</div>
+										<div th:unless="${estate.inTop}">
+											<div th:unless="${estate.estatePhoto.empty}">
+												<img class="img-thumbnail" th:src="@{/show/{id}(id=${estate.estatePhoto[0].id})}" width="100%"></img>
+											</div>
+											<div th:if="${estate.estatePhoto.empty}">
+												<img class="img-thumbnail" src="/images/no-photo.jpg" width="50%"></img>
+											</div>
+										</div>
+									</a>
+								</td>
+								<td class="col-sm-7">
+									<a class="h5" style="color: blue; word-wrap: break-word; min-width: 160px; max-width: 160px;" th:text="${estate.estateName}" th:href="@{/estate-window/{id}(id=${estate.id})}" />
+									<br/>
+									<span th:text="${estate.estateType} + ' (' + ${estate.operationType} + ')' "></span>
+									<br/>
+									<b> <span th:text="${estate?.cityType}"></span></b>
+									<span style="color:grey" th:text="${estate.date}"></span>
+									<br/>
+									<span style="color:grey" th:text="'ID: ' + ${estate.id}"></span>
+								</td>
+								<td class="col-sm-3">
+									<br/>
+									<img src="/images/price.png" width="10%"></img>
+									<span class="h5" th:text="${estate.price != null} ? ${estate.price} + ' грн' : 'договорная'"></span>
+								</td>							
+							</tr>
+						</th:block>
+					</tbody>
+				</table>
+			</div>		
+
+			<div class="pager">
+				<ul class="pagination justify-content-center">
+					<li class="page-item disabled">
+						<a class="page-link" href="#" tabindex="-1"><</a>
+					</li>
+					<th:block th:each = "pageNum : ${#numbers.sequence(1, pagesCount)}">
+						<li  class="page-item">
+							<a class="page-link" th:text="${pageNum}" th:href="'/'+${pageNum}"></a>
+						</li>
+					</th:block>
+					<li class="page-item disabled">
+						<a class="page-link" href="/0">></a>
+					</li>
+				</ul>
+			</div>			
+		
+			<footer class="footer">
+				<div class="row">
+					<div class="col-sm-12">
+						<p>Разработчик: <a href="mailto:oleksii.bakhtin@gmail.com">oleksii.bakhtin@gmail.com</a></p>
+						<p>Телефон: +38(050)18-20-115</p>
+						<p>Адрес: г. Киев пр-т Маяковского</p>
+					</div>
+				</div>
+			</footer>
+		</div>
+	</body>
+</html>
